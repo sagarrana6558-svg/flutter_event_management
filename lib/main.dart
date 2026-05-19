@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'Screen/splash.dart';
+//import 'Screen/splash.dart';
+import 'Screen/firstscreen.dart';
 
 void main() {
   runApp(const EventmanagerApp());
@@ -18,7 +19,7 @@ class _EventmanagerAppState extends State<EventmanagerApp> {
     return MaterialApp(
       title: 'Event Manager',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: const SplashScreen(),
+      home: const EventScreen(),
     );
   }
 }
