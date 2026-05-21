@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'addevent.dart';
 import 'firstscreen.dart';
@@ -14,6 +13,9 @@ class FragmentHolder extends StatefulWidget {
 }
 
 class _FragmentHolderState extends State<FragmentHolder> {
+  _FragmentHolderState() {
+    loadlist();
+  }
   List<Map<String, dynamic>> data = [
     {"title": "Music Concert", "date": "20 May 2026", "location": "Ahmedabad"},
     {"title": "Tech Seminar", "date": "25 May 2026", "location": "Gandhinagar"},
@@ -28,6 +30,25 @@ class _FragmentHolderState extends State<FragmentHolder> {
       print('Data saved successfully');
     } catch (e) {
       print('Error saving data: $e');
+    }
+  }
+
+  Future<void> loadlist() async {
+    try {
+      final sharedPreferences = await SharedPreferences.getInstance();
+      final String encodedData =
+          sharedPreferences.getString('event_data') ?? '[]';
+      if (encodedData != '[]') {
+        final List<dynamic> decodedData = jsonDecode(encodedData);
+        setState(() {
+          data = List<Map<String, dynamic>>.from(decodedData);
+        });
+        print('Data loaded successfully');
+      } else {
+        print('No data found');
+      }
+    } catch (e) {
+      print('Error loading data: $e');
     }
   }
 
