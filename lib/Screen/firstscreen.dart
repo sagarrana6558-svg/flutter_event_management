@@ -1,159 +1,192 @@
 import 'package:flutter/material.dart';
+import 'addevent.dart';
 
-class EventScreen extends StatefulWidget {
-  const EventScreen({super.key});
-
-  @override
-  State<EventScreen> createState() => _EventScreenState();
-}
-
-class _EventScreenState extends State<EventScreen> {
-  List<Map<String, dynamic>> events = [
-    {"title": "Music Concert", "date": "20 May 2026", "location": "Ahmedabad"},
-    {"title": "Tech Seminar", "date": "25 May 2026", "location": "Gandhinagar"},
-    {"title": "College Fest", "date": "30 May 2026", "location": "Surat"},
-    {"title": "Art Exhibition", "date": "05 June 2026", "location": "Rajkot"},
-    {"title": "Food Festival", "date": "10 June 2026", "location": "Vadodara"},
-    {"title": "Marathon", "date": "15 June 2026", "location": "Bhavnagar"},
-  ];
-
-  // Add Event
-  void addEvent() {
-    setState(() {
-      events.add({
-        "title": "New Event",
-        "date": "01 June 2026",
-        "location": "Rajkot",
-      });
-    });
-  }
-
-  // Edit Event
-  void editEvent(int index) {
-    setState(() {
-      events[index]["title"] = "Updated Event";
-    });
-  }
+class EventScreen extends StatelessWidget {
+  const EventScreen({
+    super.key,
+    required this.data,
+    required this.deleteEvent,
+    required this.editEvent,
+    required this.addEvents,
+  });
+  final List<Map<String, dynamic>> data;
+  final Function deleteEvent;
+  final Function editEvent;
+  final Function addEvents;
 
   // Delete Event
-  void deleteEvent(int index) {
-    setState(() {
-      events.removeAt(index);
-    });
-  }
+
+  // Edit Event
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
-        backgroundColor: const Color(0xFF0C1638),
-        centerTitle: true,
-        title: const Text("Event Manager"),
-
+        backgroundColor: const Color(0xFF4A00E0),
+        title: Row(
+          children: [
+            Padding(padding: const EdgeInsets.only(right: 8.0)),
+            Image.asset("images/image12.png", height: 60),
+            const SizedBox(width: 12),
+            const Text(
+              "Event Manager",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+                fontSize: 20,
+              ),
+            ),
+          ],
+        ),
         actions: [
           IconButton(
-            onPressed: addEvent,
-            icon: const Icon(Icons.add),
-            tooltip: 'Add event',
+            icon: const Icon(Icons.add, color: Colors.white),
+            tooltip: 'Add Event',
+            onPressed: () => addEvents(context),
           ),
         ],
       ),
 
       body: Container(
-        margin: const EdgeInsets.all(12),
         decoration: const BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Color(0xFF0C1638),
-              blurRadius: 10,
-              offset: Offset(0, 5),
-            ),
-          ],
           gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Color(0xFF0C1638), Color(0xFF0C122B)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Color(0xFF4A00E0), Color(0xFF8E2DE2), Color(0xFF00C9FF)],
           ),
         ),
+
+        // It will add the events and show the list of events in the home screen
         child: ListView.builder(
-          padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
-          itemCount: events.length,
-
+          itemCount: data.length,
           itemBuilder: (context, index) {
-            final event = events[index];
+            final event = data[index];
 
-            return Card(
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              color: const Color(0xFF162149),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
+            return Container(
+              margin: const EdgeInsets.all(12),
+
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Color(0xFF4A00E0),
+                    Color(0xFF8E2DE2),
+                    Color(0xFF00C9FF),
+                  ],
+                ),
+
+                // Card Design for Event List
+                borderRadius: BorderRadius.circular(20),
+
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 10,
+                    offset: Offset(0, 4),
+                  ),
+                ],
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(14),
 
+              // circle avtar for the event icon Event Card
+              child: Padding(
+                padding: const EdgeInsets.all(10),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      leading: CircleAvatar(
-                        backgroundColor: const Color(0xFF53C6E5),
-                        child: const Icon(Icons.event, color: Colors.black),
+                      leading: const CircleAvatar(
+                        backgroundColor: Color.fromARGB(122, 77, 77, 79),
+                        child: Icon(Icons.event, color: Colors.white),
                       ),
+
                       title: Text(
                         event["title"],
                         style: const TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 19,
                           color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
+
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 6),
+                          const SizedBox(height: 8),
+
                           Text(
-                            "Date: ${event["date"]}",
+                            "📅 ${event["date"]}",
                             style: const TextStyle(color: Colors.white70),
                           ),
+
                           Text(
-                            "Location: ${event["location"]}",
+                            "📍 ${event["location"]}",
                             style: const TextStyle(color: Colors.white70),
                           ),
                         ],
                       ),
                     ),
 
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 10),
 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         ElevatedButton.icon(
-                          onPressed: () {
-                            editEvent(index);
-                          },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF53C6E5),
-                            foregroundColor: Colors.black,
+                            backgroundColor: const Color.fromARGB(
+                              122,
+                              77,
+                              77,
+                              79,
+                            ),
                           ),
-                          icon: const Icon(Icons.edit, size: 18),
-                          label: const Text("Edit"),
+
+                          // Update Event
+                          onPressed: () async {
+                            final updatedEvent = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    AddEventScreen(event: event),
+                              ),
+                            );
+
+                            if (updatedEvent != null) {
+                              editEvent(index, updatedEvent);
+                            }
+                          },
+
+                          icon: const Icon(Icons.edit, color: Colors.white),
+
+                          label: const Text(
+                            "Edit",
+                            style: TextStyle(color: Colors.white),
+                          ),
                         ),
 
                         const SizedBox(width: 10),
 
                         ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color.fromARGB(
+                              122,
+                              77,
+                              77,
+                              79,
+                            ),
+                          ),
+
+                          // Delete Event
                           onPressed: () {
                             deleteEvent(index);
                           },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFFEE7A70),
-                            foregroundColor: Colors.black,
+
+                          icon: const Icon(Icons.delete, color: Colors.white),
+
+                          label: const Text(
+                            "Delete",
+                            style: TextStyle(color: Colors.white),
                           ),
-                          icon: const Icon(Icons.delete, size: 18),
-                          label: const Text("Delete"),
                         ),
                       ],
                     ),
