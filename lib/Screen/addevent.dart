@@ -130,7 +130,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                         : Colors.grey,
                     padding: const EdgeInsets.all(15),
                   ),
-                  onPressed: isSaveEnabled
+                  onPressed: true
                       ? () {
                           Map<String, dynamic> newEvent = {
                             'title': titleController.text,
