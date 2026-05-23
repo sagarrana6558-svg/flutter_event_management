@@ -22,14 +22,26 @@ class EventScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFF4A00E0),
+        backgroundColor: Color.fromARGB(121, 7, 7, 231),
         title: Row(
           children: [
-            Padding(padding: const EdgeInsets.only(right: 8.0)),
-            Image.asset("images/image12.png", height: 60),
+            CircleAvatar(
+              radius: 22,
+              backgroundColor: Colors.white,
+              child: ClipOval(
+                child: Image.asset(
+                  'assets/images/image12.png', // your generated logo image
+                  fit: BoxFit.cover,
+                  width: 34,
+                  height: 34,
+                ),
+              ),
+            ),
+
             const SizedBox(width: 12),
+
             const Text(
-              "Event Manager",
+              "Event Management",
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w600,

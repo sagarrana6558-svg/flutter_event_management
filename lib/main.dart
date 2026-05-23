@@ -20,7 +20,7 @@ class _EventmanagerAppState extends State<EventmanagerApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Event Manager',
+      title: 'Event Managment',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: const FragmentHolder(),
     );

@@ -58,7 +58,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(222, 147, 100, 243),
+        backgroundColor: Color.fromARGB(121, 7, 7, 231),
+
         title: Text(
           widget.event == null ? 'Add Event' : 'Edit Event',
           style: const TextStyle(color: Colors.white),
@@ -127,7 +128,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: isSaveEnabled
                         ? const Color.fromARGB(122, 77, 77, 79)
-                        : Colors.grey,
+                        : const Color.fromARGB(122, 77, 77, 79),
+
                     padding: const EdgeInsets.all(15),
                   ),
                   onPressed: true
